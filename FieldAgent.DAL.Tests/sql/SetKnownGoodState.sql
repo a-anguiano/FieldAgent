@@ -143,16 +143,6 @@ insert into Alias (AliasId, AgentId, AliasName, InterpolId, Persona) values (14,
 insert into Alias (AliasId, AgentId, AliasName, InterpolId, Persona) values (15, 15, 'Lavenderleaf Sundrops', '37434980-fa98-4c9c-af83-ae91bf216bb7', 'Devolved systemic framework');
 SET IDENTITY_INSERT Alias OFF;
 
---MissionAgent
-insert into MissionAgent 
-    (MissionId, AgentId)
-        select
-            m.MissionId,                             -- MissionId
-            a.AgentId                              -- AgentId									
-        from Mission m
-		Cross JOIN Agent a
-		WHERE m.MissionId = a.AgentId;
-
 --SecurityClearance
 insert into SecurityClearance (SecurityClearanceName) values ('None');	--1
 insert into SecurityClearance (SecurityClearanceName) values ('Retired');
@@ -160,6 +150,7 @@ insert into SecurityClearance (SecurityClearanceName) values ('Secret');
 insert into SecurityClearance (SecurityClearanceName) values ('TopSecret');
 insert into SecurityClearance (SecurityClearanceName) values ('Black Ops');
 
+TRUNCATE TABLE AgencyAgent
 --AgencyAgent
 insert into AgencyAgent 
     (AgencyId, AgentId, SecurityClearanceId, BadgeId, ActivationDate, DeactivationDate, IsActive)
@@ -192,5 +183,15 @@ WHERE AgencyId BETWEEN 13 AND 15;
 UPDATE AgencyAgent SET
 	SecurityClearanceId = 5
 WHERE AgencyId =5;
+
+--MissionAgent
+insert into MissionAgent 
+    (MissionId, AgentId)
+        select
+            m.MissionId,                         
+            a.AgentId                           									
+        from Mission m
+		Cross JOIN Agent a
+		WHERE m.MissionId = a.AgentId;
 
 END;

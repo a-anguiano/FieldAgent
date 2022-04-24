@@ -14,9 +14,19 @@ namespace FieldAgent.DAL
             DbFac = dbfac;
         }
 
-        public Response Delete(int agencyid, int agentid)
+        public Response Delete(int agencyId, int agentId)
         {
-            throw new NotImplementedException();
+            Response<AgencyAgent> response = new Response<AgencyAgent>();
+
+            using (var db = DbFac.GetDbContext())
+            {
+                AgencyAgent aa = db.AgenciesAgents.Find(agencyId, agentId);
+                db.AgenciesAgents.Remove(aa);
+                db.SaveChanges();
+                response.Success = true;
+                response.Message = "";
+            }
+            return response;
         }
 
         public Response<AgencyAgent> Get(int agencyid, int agentid)
@@ -42,12 +52,28 @@ namespace FieldAgent.DAL
 
         public Response<List<AgencyAgent>> GetByAgency(int agencyId)
         {
-            throw new NotImplementedException();
+            Response<List<AgencyAgent>> response = new Response<List<AgencyAgent>>();
+
+            using (var db = DbFac.GetDbContext())
+            {
+                List<AgencyAgent> results = db.AgenciesAgents
+                    .Where(aa => aa.AgencyId == agencyId).ToList();
+                response.Data = results;
+            }
+            return response;
         }
 
         public Response<List<AgencyAgent>> GetByAgent(int agentId)
         {
-            throw new NotImplementedException();
+            Response<List<AgencyAgent>> response = new Response<List<AgencyAgent>>();
+            
+            using (var db = DbFac.GetDbContext())
+            {
+                List<AgencyAgent> results = db.AgenciesAgents
+                    .Where(aa => aa.AgentId == agentId).ToList();
+                response.Data = results;
+            }
+            return response;
         }
 
         public Response<AgencyAgent> Insert(AgencyAgent agencyAgent)
@@ -56,7 +82,7 @@ namespace FieldAgent.DAL
             using (var db = DbFac.GetDbContext())
             {
                 db.AgenciesAgents.Add(agencyAgent);
-                db.SaveChanges();
+                db.SaveChanges();                       //!!!!!!
                 
                 response.Success = true;
                 //agent name, agency name?

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using FieldAgent.DAL.EF;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,7 @@ namespace FieldAgent.DAL.Tests
 {
     public class AliasRepositoryTests
     {
+        AliasRepository db;
+        DBFactory dbf;
     }
 }

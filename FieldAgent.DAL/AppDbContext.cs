@@ -39,18 +39,8 @@ namespace FieldAgent.DAL
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            //builder.Entity<AgencyAgent>
-            //    ().ToTable("AgencyAgent").HasKey(aa => new { aa.AgencyId, aa.AgentId });
-
             builder.Entity<AgencyAgent>
                 ().ToTable("AgencyAgent").HasKey(aa => new { aa.AgencyId, aa.AgentId });
-
-            //builder.Entity<Agent>().HasMany(at => at.Agencies).WithMany(ac => ac.Agents)
-            //    .Map(
-            //    m => {
-            //    m.MapLeftKey("AgentId");
-            //    m.MapRightKey("AgencyId");
-            //    m.ToTable("AgencyAgent");});
 
             //builder.Entity<AgencyAgent>()
             //.HasKey(aa => new { aa.AgencyId, aa.AgentId });

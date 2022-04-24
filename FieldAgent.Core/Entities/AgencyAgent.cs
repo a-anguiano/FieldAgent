@@ -35,12 +35,6 @@ namespace FieldAgent.Core.Entities
                    DeactivationDate == aa.DeactivationDate &&
                    IsActive == aa.IsActive &&
                    SecurityClearanceId == aa.SecurityClearanceId;
-
-                   //Type == transaction.Type &&
-                   //Timestamp == transaction.Timestamp &&
-                   //Amount == transaction.Amount &&
-                   //Note == transaction.Note &&
-                   //BankAccountId == transaction.BankAccountId;
         }
 
         public override int GetHashCode()
