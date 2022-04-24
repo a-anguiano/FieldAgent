@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace FieldAgent.DAL.EF
 {
@@ -31,9 +32,12 @@ namespace FieldAgent.DAL.EF
                 }
 
                 Agent agent = db.Agents.Find(agentId);
+                //cascade delete??
                 db.Agents.Remove(agent);
+                //
                 db.SaveChanges();
                 response.Data = agent;
+                response.Success = true;
                 return response;
             }
         }
@@ -62,8 +66,31 @@ namespace FieldAgent.DAL.EF
 
         public Response<List<Mission>> GetMissions(int agentId)
         {
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            throw new NotImplementedException();
+            Response<Agent> responseA = Get(agentId);
+            Response<List<Mission>> responseB = new Response<List<Mission>>();
+
+            if (responseA.Success)
+            {
+                List<Mission> missions = new List<Mission>();
+                using (var db = DbFac.GetDbContext())
+                {
+                    var agents = db.Agents      //agentmission instead of ma
+                        .Include(at => at.Missions)
+                        .Where(at => at.AgentId == agentId)
+                        .ToList();
+
+                    foreach (var at in agents)
+                    {
+                        foreach (var mission in at.Missions)
+                        {
+                            missions.Add(mission);
+                        }
+                    }
+                    responseB.Data = missions;
+                    responseB.Success = true;
+                }
+            }
+            return responseB;
         }
 
         public Response<Agent> Insert(Agent agent)

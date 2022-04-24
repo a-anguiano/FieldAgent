@@ -38,6 +38,9 @@ namespace FieldAgent.DAL.Tests
         {
             AgencyAgent expected = new AgencyAgent
             {
+                //Foreign Key stuff
+                AgencyId = 3,
+                AgentId = 2,
                 BadgeId = Guid.Parse("db04727a-f808-4552-a452-9124d33b320a"),
                 ActivationDate = DateTime.Parse("1-10-2022"),   //in future may have to change these
                 DeactivationDate = DateTime.Parse("1-11-2023"),
@@ -79,7 +82,8 @@ namespace FieldAgent.DAL.Tests
         [Test]
         public void TestGet()
         {
-            Assert.AreEqual(AA, db.Get(1,1).Data);  //visually equivalent
+            Assert.AreEqual(AA.ToString(), db.Get(1,1).Data.ToString());  //visually equivalent
+            Assert.AreEqual(AA.AgentId, db.Get(1,1).Data.AgentId);
         }
         
         [Test]
@@ -87,7 +91,7 @@ namespace FieldAgent.DAL.Tests
         {
             List<AgencyAgent> aa = new List<AgencyAgent>();
             aa.Add(AA);
-            Assert.AreEqual(aa, db.GetByAgency(1).Data);
+            Assert.AreEqual(aa.ToString(), db.GetByAgency(1).Data.ToString());
         }
 
         [Test]
@@ -95,7 +99,7 @@ namespace FieldAgent.DAL.Tests
         {
             List<AgencyAgent> aa = new List<AgencyAgent>();
             aa.Add(AA);
-            Assert.AreEqual(aa, db.GetByAgent(1).Data);
+            Assert.AreEqual(aa.ToString(), db.GetByAgent(1).Data.ToString());
         }
     }
 }

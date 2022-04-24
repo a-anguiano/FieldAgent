@@ -42,6 +42,8 @@ namespace FieldAgent.DAL
             builder.Entity<AgencyAgent>
                 ().ToTable("AgencyAgent").HasKey(aa => new { aa.AgencyId, aa.AgentId });
 
+            //builder.Entity<AgencyAgent>().HasOne(aa => aa.Agency).WithMany(ac => ac.AgencyAgent);
+
             //builder.Entity<AgencyAgent>()
             //.HasKey(aa => new { aa.AgencyId, aa.AgentId });
 
