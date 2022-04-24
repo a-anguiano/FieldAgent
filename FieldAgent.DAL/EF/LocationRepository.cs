@@ -11,6 +11,13 @@ namespace FieldAgent.DAL.EF
 {
     public class LocationRepository : ILocationRepository
     {
+        public DBFactory DbFac { get; set; }
+
+        public LocationRepository(DBFactory dbfac)
+        {
+            DbFac = dbfac;
+        }
+
         public Response Delete(int locationId)
         {
             throw new NotImplementedException();

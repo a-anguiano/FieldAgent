@@ -11,14 +11,60 @@ namespace FieldAgent.DAL.EF
 {
     public class SecurityClearanceRepository : ISecurityClearanceRepository
     {
+        public DBFactory DbFac { get; set; }
+
+        public SecurityClearanceRepository(DBFactory dbfac)
+        {
+            DbFac = dbfac;
+        }
         public Response<SecurityClearance> Get(int securityClearanceId)
         {
-            throw new NotImplementedException();
+            Response<SecurityClearance> response = new Response<SecurityClearance>();
+
+            using (var db = DbFac.GetDbContext())
+            {
+                response.Data = db.SecurityClearances.Find(securityClearanceId);
+                if (response.Data == null)
+                {
+                    response.Success = false;
+                    response.Message = "It failed";
+                }
+                else
+                {
+                    response.Success = true;
+                    response.Message = "It's a success";
+                }
+            }
+            return response;
         }
 
         public Response<List<SecurityClearance>> GetAll()
         {
-            throw new NotImplementedException();
+            Response<List<SecurityClearance>> response = new Response<List<SecurityClearance>>();
+
+            using (var db = DbFac.GetDbContext())
+            {
+                List<SecurityClearance> scList = new List<SecurityClearance>();
+
+                for (int i = 1; i <= 5; i++)
+                {
+                    scList.Add(db.SecurityClearances.Find(i));
+                }
+
+                response.Data = scList;
+
+                if (response.Data == null)
+                {
+                    response.Success = false;
+                    response.Message = "It failed";
+                }
+                else
+                {
+                    response.Success = true;
+                    response.Message = "It's a success";
+                }
+            }
+            return response;
         }
     }
 }

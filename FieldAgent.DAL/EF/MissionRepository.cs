@@ -11,6 +11,13 @@ namespace FieldAgent.DAL.EF
 {
     public class MissionRepository : IMissionRepository
     {
+        public DBFactory DbFac { get; set; }
+
+        public MissionRepository(DBFactory dbfac)
+        {
+            DbFac = dbfac;
+        }
+
         public Response Delete(int missionId)
         {
             throw new NotImplementedException();
