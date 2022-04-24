@@ -67,7 +67,7 @@ namespace FieldAgent.DAL.EF
             using (var db = DbFac.GetDbContext())
             {
                 List<Alias> results = db.Aliases
-                    .Where(aa => aa.AgentId == agentId).ToList();
+                    .Where(at => at.AgentId == agentId).ToList();
                 response.Data = results;
             }
             return response;
