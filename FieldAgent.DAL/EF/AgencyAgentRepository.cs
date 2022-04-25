@@ -22,9 +22,17 @@ namespace FieldAgent.DAL
             {
                 AgencyAgent aa = db.AgenciesAgents.Find(agencyId, agentId);
                 db.AgenciesAgents.Remove(aa);
-                db.SaveChanges();
-                response.Success = true;
-                response.Message = "";
+                try
+                {
+                    db.SaveChanges();
+                    response.Success = true;
+                    response.Message = "";
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    response.Success = false;
+                }
             }
             return response;
         }

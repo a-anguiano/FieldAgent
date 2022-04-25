@@ -201,7 +201,7 @@ END;
 -- where TABLE_NAME = 'Agency'
 
 SELECT * from AgencyAgent;	--badgeId constant
-select * from Mission;
+--select * from Mission;
 select * from Agent;
 select * from SecurityClearance;	
 select * from Agency;
@@ -209,26 +209,6 @@ select * from MissionAgent;	--null
 select * from [Location]; 
 select * from Alias;
 
-
---AuditClearance
---Return agent information given a security clearance value and agency id
--- SELECT
---     a.AgentId, a.FirstName, a.LastName, a.DateOfBirth, a.Height, sc.SecurityClearanceId
--- FROM Agent a
---     INNER JOIN AgencyAgent aa on a.AgentId = aa.AgentId
---     INNER JOIN SecurityClearance sc on aa.SecurityClearanceId = sc.SecurityClearanceId
---     INNER JOIN Agency ac on aa.AgencyId = ac.AgencyId
--- WHERE ac.AgencyId = 1 AND sc.SecurityClearanceId = 1;
-
---TopAgents
---Returns top three agents by number of missions completed (ActualEndDate not null)
--- SELECT top(3)
--- 	a.AgentId, a.FirstName, a.LastName, a.DateOfBirth, a.Height, COUNT(*) NumberOfMissions
--- FROM Agent a
--- 	INNER JOIN MissionAgent ma on a.AgentId = ma.AgentId
--- 	INNER JOIN Mission m on ma.MissionId = m.MissionId
--- WHERE m.ActualEndDate IS NOT NULL
--- ORDER BY NumberOfMissions DESC;
 
 --PensionList
 --Return agent information for only retired agents (security clearance retired)	agencyId

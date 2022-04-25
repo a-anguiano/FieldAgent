@@ -1,4 +1,4 @@
-﻿namespace FieldAgent.Core
+﻿namespace FieldAgent.Core.DTOs
 {
     public class ClearanceAuditListItem
     {

@@ -1,31 +1,29 @@
 --DROP PROCEDURE [AuditClearance]
 --Actually have to run it in Azure
 --Return agent information given a security clearance value and agency id	securityClearanceId, agencyId
---list???
 
--- CREATE PROCEDURE [AuditClearance] (
---         @AgencyId AS int,
---         @SecurityClearanceId AS int,
---         @AgentId AS int OUTPUT
--- )
--- AS
--- BEGIN
--- SELECT
---     a.AgentId, a.FirstName, a.LastName, a.DateOfBirth, a.Height, sc.SecurityClearanceId
--- FROM Agent a
---     INNER JOIN AgencyAgent aa on a.AgentId = aa.AgentId
---     INNER JOIN SecurityClearance sc on aa.SecurityClearanceId = sc.SecurityClearanceId
---     INNER JOIN Agency ac on aa.AgencyId = ac.AgencyId
--- WHERE ac.AgencyId = @AgencyId AND sc.SecurityClearanceId = @SecurityClearaanceId
+CREATE PROCEDURE [AuditClearance] (
+        @agencyId AS int,
+        @securityClearanceId AS int
+)
+AS
+BEGIN
+SELECT
+    aa.BadgeId, CONCAT(a.LastName,', ', a.FirstName) NameLastFirst, a.DateOfBirth, aa.ActivationDate, aa.DeactivationDate
+FROM Agent a
+    INNER JOIN AgencyAgent aa on a.AgentId = aa.AgentId
+    INNER JOIN SecurityClearance sc on aa.SecurityClearanceId = sc.SecurityClearanceId
+    INNER JOIN Agency ac on aa.AgencyId = ac.AgencyId
+WHERE ac.AgencyId = @agencyId AND sc.SecurityClearanceId = @securityClearanceId
 
--- END;
+END;
 
 --using TestFieldAgent;
 
 -- SELECT
---     a.AgentId, a.FirstName, a.LastName, a.DateOfBirth, a.Height, sc.SecurityClearanceId
+--     aa.BadgeId, CONCAT(a.LastName,', ', a.FirstName) NameLastFirst, a.DateOfBirth, aa.ActivationDate, aa.DeactivationDate
 -- FROM Agent a
 --     INNER JOIN AgencyAgent aa on a.AgentId = aa.AgentId
 --     INNER JOIN SecurityClearance sc on aa.SecurityClearanceId = sc.SecurityClearanceId
 --     INNER JOIN Agency ac on aa.AgencyId = ac.AgencyId
--- WHERE ac.AgencyId = 2 AND sc.SecurityClearanceId = 2;
+-- WHERE ac.AgencyId = 2 AND sc.SecurityClearanceId = 1;

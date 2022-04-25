@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FieldAgent.Core.Entities;
 
 namespace FieldAgent.DAL.Tests
 {
@@ -36,7 +35,23 @@ namespace FieldAgent.DAL.Tests
             CompletedMissionCount = 1
         };
 
+        PensionListItem pensionListItem1 = new PensionListItem
+        {
+            AgencyName = "Murazik Group, Mur",
+            BadgeId = Guid.Parse("c4c0537d-6b12-4d0d-92dd-d71bb6e03f04"),
+            NameLastFirst = "Alderson, Jon",
+            DateOfBirth = DateTime.Parse("3/4/1990"),
+            DeactivationDate = DateTime.Parse("3/4/2010")
+        };
 
+        ClearanceAuditListItem audit1 = new ClearanceAuditListItem()
+        {
+            BadgeId = Guid.Parse("c4c0537d-6b12-4d0d-92dd-d71bb6e03f04"),
+            NameLastFirst = "Coleby, Truda", 
+            DateOfBirth = DateTime.Parse("12/6/1980"),
+            ActivationDate = DateTime.Parse("12/6/1990"),
+            DeactivationDate = DateTime.Parse("12/6/2000")
+        };
 
         [SetUp]
         public void Setup()
@@ -65,13 +80,25 @@ namespace FieldAgent.DAL.Tests
         [Test]
         public void TestGetPensionList()
         {
+            List<PensionListItem> pensions = new List<PensionListItem>();
+            pensions.Add(pensionListItem1);
+            var actual = db.GetPensionList(6);
 
+            Assert.AreEqual(1, actual.Data.Count);
+            Assert.IsTrue(actual.Success);
+            Assert.AreEqual(pensions[0].ToString(), actual.Data[0].ToString());
         }
 
         [Test]
         public void TestAuditClearance()
         {
+            List<ClearanceAuditListItem> audits = new List<ClearanceAuditListItem>();
+            audits.Add(audit1);
+            var actual = db.AuditClearance(1, 2);
 
+            Assert.AreEqual(1, actual.Data.Count);
+            Assert.IsTrue(actual.Success);
+            Assert.AreEqual(audits[0].ToString(), actual.Data[0].ToString());
         }
     }
 }

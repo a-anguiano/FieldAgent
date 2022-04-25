@@ -44,17 +44,6 @@ namespace FieldAgent.DAL
 
             //builder.Entity<AgencyAgent>().HasOne(aa => aa.Agency).WithMany(ac => ac.AgencyAgent);
 
-            //builder.Entity<AgencyAgent>()
-            //.HasKey(aa => new { aa.AgencyId, aa.AgentId });
-
-            //builder.Entity<Agency>().ToTable("Agency");
-            //builder.Entity<Agent>().ToTable("Agent");
-
-            //builder.Entity<Alias>().ToTable("Alias");
-            //builder.Entity<Location>().ToTable("Location");
-            //builder.Entity<Mission>().ToTable("Mission");
-            //builder.Entity<SecurityClearance>().ToTable("SecurityClearance");
-
             //builder.Entity<Mission>().HasMany(m => m.Agents).WithMany(a => a.Missions).MapToStoredProcedures();
         }
     }
