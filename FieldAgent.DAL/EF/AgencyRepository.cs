@@ -19,7 +19,37 @@ namespace FieldAgent.DAL.EF
         }
         public Response Delete(int agencyId)
         {
-            throw new NotImplementedException();
+            Response<Agency> response = new Response<Agency>();
+
+            using (var db = DbFac.GetDbContext())
+            {
+                foreach (Location l in db.Locations.Where(l => l.AgencyId == agencyId).ToList())
+                {
+                    db.Locations.Remove(l);
+                }
+
+                foreach (Mission m in db.Missions.Where(m => m.AgencyId == agencyId).ToList())
+                {
+                    //foreach (Agent at in db.Agents.Where(m).ToList())
+                    //{
+                    //    db.Agents.Remove(at);
+                    //}
+
+                    db.Missions.Remove(m);
+                }
+
+                foreach (AgencyAgent aa in db.AgenciesAgents.Where(m => m.AgencyId == agencyId).ToList())
+                {
+                    db.AgenciesAgents.Remove(aa);
+                }
+
+                Agency agency = db.Agencies.Find(agencyId);
+                db.Agencies.Remove(agency);
+                db.SaveChanges();
+                response.Data = agency;
+                response.Success = true;
+                return response;
+            }
         }
 
         public Response<Agency> Get(int agencyId)
@@ -46,7 +76,27 @@ namespace FieldAgent.DAL.EF
 
         public Response<List<Agency>> GetAll()
         {
-            throw new NotImplementedException();
+            Response<List<Agency>> response = new Response<List<Agency>>();
+            List<Agency> listAgencies = new List<Agency>();
+
+            using (var db = DbFac.GetDbContext())
+            {
+                listAgencies = db.Agencies.ToList();
+            }
+            response.Data = listAgencies;
+
+            if (response.Data == null)
+            {
+                response.Success = false;
+                response.Message = "It failed";
+            }
+            else
+            {
+                response.Success = true;
+                response.Message = "It's a success";
+            }
+
+            return response;
         }
 
         public Response<Agency> Insert(Agency agency)
@@ -64,7 +114,15 @@ namespace FieldAgent.DAL.EF
 
         public Response Update(Agency agency)
         {
-            throw new NotImplementedException();
+            Response<Agency> response = new Response<Agency>();
+
+            using (var db = DbFac.GetDbContext())   //here
+            {
+                db.Agencies.Update(agency);
+                db.SaveChanges();
+                response.Data = agency;
+                return response;
+            }
         }
     }
 }

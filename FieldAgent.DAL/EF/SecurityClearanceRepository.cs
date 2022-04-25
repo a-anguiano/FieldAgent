@@ -46,10 +46,7 @@ namespace FieldAgent.DAL.EF
             {
                 List<SecurityClearance> scList = new List<SecurityClearance>();
 
-                for (int i = 1; i <= 5; i++)
-                {
-                    scList.Add(db.SecurityClearances.Find(i));
-                }
+                scList = db.SecurityClearances.ToList();
 
                 response.Data = scList;
 

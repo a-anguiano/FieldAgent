@@ -25,7 +25,7 @@ namespace FieldAgent.DAL
             Mode = mode;
         }
 
-        public static string GetConnectionString(IConfigurationRoot Config, FactoryMode Mode)
+        public string GetConnectionString() //, FactoryMode Mode //static //IConfigurationRoot Config
         {
             string environment = Mode == FactoryMode.TEST ? "Test" : "Prod";
             _connectionString = Config[$"ConnectionStrings:{environment}"];

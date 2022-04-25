@@ -15,13 +15,14 @@ namespace FieldAgent.DAL.ADO
 {
     public class SqlReportsRepository : IReportsRepository
     {
-        private readonly IConfigurationRoot Config;
-        private readonly FactoryMode Mode;
+        //private readonly IConfigurationRoot Config;
+        ////private readonly FactoryMode Mode;
+        public DBFactory DbFac { get; set; }
 
-        public SqlReportsRepository(IConfigurationRoot config, FactoryMode mode = FactoryMode.PROD)
+        public SqlReportsRepository(DBFactory dbfac)    //IConfigurationRoot config, 
         {
-            Config = config;
-            Mode = mode;
+            //Config = config;
+            DbFac = dbfac;
         }
         public Response<List<ClearanceAuditListItem>> AuditClearance(int securityClearanceId, int agencyId)
         {
@@ -31,7 +32,7 @@ namespace FieldAgent.DAL.ADO
 
             var agents = new List<Agent>();
 
-            using (var cn = new SqlConnection(DBFactory.GetConnectionString(Config, Mode)))  //?get cn string
+            using (var cn = new SqlConnection(DbFac.GetConnectionString()))  
             {
 
                 var cmd = new SqlCommand("AuditClearance", cn);
@@ -68,15 +69,79 @@ namespace FieldAgent.DAL.ADO
 
         public Response<List<PensionListItem>> GetPensionList(int agencyId)
         {
-            throw new NotImplementedException();
-            //agencyId
+            Response<List<PensionListItem>> response = new Response<List<PensionListItem>>();
+            List<PensionListItem> pensions = new List<PensionListItem>();
+
+            using (var cn = new SqlConnection(DbFac.GetConnectionString()))  
+            {
+                var cmd = new SqlCommand("PensionListItem", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                try
+                {
+                    cn.Open();
+
+                    using (var dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            var row = new PensionListItem();
+                            row.AgencyName = (string)dr["AgencyName"];
+                            row.BadgeId = (Guid)dr["BadgeId"];
+                            row.NameLastFirst = (string)dr["NameLastFirst"];
+                            row.DateOfBirth = (DateTime)dr["DateOfBirth"];
+                            row.DeactivationDate = (DateTime)dr["DeactivationDate"];
+                            pensions.Add(row);
+                        }
+                        response.Data = pensions;
+                        response.Success = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    response.Success = false;
+                }
+            }
+            return response;
 
         }
 
         public Response<List<TopAgentListItem>> GetTopAgents()
         {
-            throw new NotImplementedException();
-            //no input
+            Response<List<TopAgentListItem>> response = new Response<List<TopAgentListItem>>();
+            List<TopAgentListItem> topAgents = new List<TopAgentListItem>();
+
+            using (var cn = new SqlConnection(DbFac.GetConnectionString()))  //?get cn string
+            {
+                var cmd = new SqlCommand("TopAgentListItem", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                try
+                {
+                    cn.Open();
+
+                    using (var dr = cmd.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            var row = new TopAgentListItem();
+                            row.NameLastFirst = (string)dr["NameLastFirst"];
+                            row.DateOfBirth = (DateTime)dr["DateOfBirth"];
+                            row.CompletedMissionCount = (int)dr["CompletedMissionCount"];
+                            topAgents.Add(row);
+                        }
+                        response.Data = topAgents;
+                        response.Success = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    response.Success= false;
+                }
+            }
+            return response;
         }
     }
 }

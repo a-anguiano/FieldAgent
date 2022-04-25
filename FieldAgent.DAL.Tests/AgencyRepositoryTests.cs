@@ -52,10 +52,30 @@ namespace FieldAgent.DAL.Tests
             Assert.AreEqual(expected, db.Get(16).Data);
         }
 
-        //Response<Agency> Insert(Agency agency);
-        //Response Update(Agency agency);
-        //Response Delete(int agencyId);
-        //Response<Agency> Get(int agencyId);
-        //Response<List<Agency>> GetAll();
+        [Test]
+        public void TestGetAll()
+        {
+            Assert.AreEqual(15, db.GetAll().Data.Count);
+        }
+
+        [Test]
+        public void TestDelete()
+        {
+            bool actual = db.Delete(1).Success;
+            Assert.IsTrue(actual);
+            Assert.Null(db.Get(1).Data);
+        }
+
+        [Test]
+        public void TestUpdate()
+        {
+            WI.ShortName = "Shorty";
+            WI.LongName = "Longy";
+
+            db.Update(WI);
+            Agency actual = db.Get(1).Data;
+
+            Assert.AreEqual(WI.ToString(), actual.ToString());
+        }
     }
 }
