@@ -1,15 +1,8 @@
 ﻿using FieldAgent.Core;
 using FieldAgent.Core.DTOs;
-//using FieldAgent.Core.Entities;
 using FieldAgent.Core.Interfaces.DAL;
 using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FieldAgent.DAL.ADO
 {
@@ -112,7 +105,7 @@ namespace FieldAgent.DAL.ADO
             Response<List<TopAgentListItem>> response = new Response<List<TopAgentListItem>>();
             List<TopAgentListItem> topAgents = new List<TopAgentListItem>();
 
-            using (var cn = new SqlConnection(DbFac.GetConnectionString()))  //?get cn string
+            using (var cn = new SqlConnection(DbFac.GetConnectionString()))  
             {
                 var cmd = new SqlCommand("TopAgentListItem", cn);
                 cmd.CommandType = CommandType.StoredProcedure;

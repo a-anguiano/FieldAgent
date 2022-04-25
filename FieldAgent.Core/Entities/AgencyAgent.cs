@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FieldAgent.Core.Entities
 {
@@ -36,7 +31,6 @@ namespace FieldAgent.Core.Entities
                    IsActive == aa.IsActive &&
                    SecurityClearanceId == aa.SecurityClearanceId;
         }
-
         public override int GetHashCode()
         {
             return HashCode.Combine(AgencyId, AgentId, BadgeId, ActivationDate, DeactivationDate, IsActive, SecurityClearanceId);

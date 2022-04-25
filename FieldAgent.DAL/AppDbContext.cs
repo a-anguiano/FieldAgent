@@ -1,18 +1,13 @@
 ﻿using FieldAgent.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FieldAgent.DAL
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Agency> Agencies { get; set; }   //plural or not?
+        public DbSet<Agency> Agencies { get; set; }   
         public DbSet<Agent> Agents { get; set; }
         public DbSet<AgencyAgent> AgenciesAgents { get; set; }
         public DbSet<Alias> Aliases { get; set; }
@@ -34,7 +29,6 @@ namespace FieldAgent.DAL
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.LogTo(message => Debug.WriteLine(message), LogLevel.Information);
-            //anything?
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

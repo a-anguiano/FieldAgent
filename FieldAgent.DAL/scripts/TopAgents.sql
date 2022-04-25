@@ -1,19 +1,14 @@
---CREATE PROCEDURE [TopAgents]
---AS
---BEGIN
---    ALTER TABLE --Transactions DROP CONSTRAINT FK_Transactions_BankAccountId;
---    --TRUNCATE TABLE Transactions;
---    --TRUNCATE TABLE BankAccounts;
---    --ALTER TABLE Transactions add constraint FK_Transactions_BankAccountId
---	   --        foreign key (AccountId)
---			 --  references BankAccounts(Id);
-    
---    --INSERT INTO BankAccounts(AccountHolder, CurrentBalance)
---    --                  VALUES('Alice', 50.00);
+CREATE PROCEDURE [TopAgentListItem]
 
---    --INSERT INTO BankAccounts(AccountHolder, CurrentBalance)
---    --                  VALUES('Bob', 0.00);
+AS
+BEGIN
+SELECT top(3)
+	CONCAT(a.LastName,', ', a.FirstName) NameLastFirst, a.DateOfBirth, COUNT(*) CompletedMissionCount
+FROM Agent a
+	INNER JOIN MissionAgent ma on a.AgentId = ma.AgentId
+	INNER JOIN Mission m on ma.MissionId = m.MissionId
+WHERE m.ActualEndDate IS NOT NULL
+GROUP BY a.LastName, a.FirstName, a.DateOfBirth
+ORDER BY CompletedMissionCount DESC
 
---    --INSERT INTO Transactions(AccountId, TransactionType, [Timestamp], Amount, Note)
---    --                  VALUES(1, 'DEPOSIT', CURRENT_TIMESTAMP, 50.00, 'Initial Deposit');
---END;
+END;

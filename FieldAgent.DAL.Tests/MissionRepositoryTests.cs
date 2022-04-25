@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FieldAgent.Core.Entities;
 using FieldAgent.DAL.EF;
 using Microsoft.EntityFrameworkCore;

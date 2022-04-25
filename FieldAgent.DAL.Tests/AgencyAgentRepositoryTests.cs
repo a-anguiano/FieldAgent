@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using FieldAgent.DAL;
 using NUnit.Framework;
 using FieldAgent.Core.Entities;
 using System;

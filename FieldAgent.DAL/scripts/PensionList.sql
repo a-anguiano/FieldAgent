@@ -1,19 +1,15 @@
---CREATE PROCEDURE [PensionList]
---AS
---BEGIN
---    ALTER TABLE --Transactions DROP CONSTRAINT FK_Transactions_BankAccountId;
---    --TRUNCATE TABLE Transactions;
---    --TRUNCATE TABLE BankAccounts;
---    --ALTER TABLE Transactions add constraint FK_Transactions_BankAccountId
---	   --        foreign key (AccountId)
---			 --  references BankAccounts(Id);
-    
---    --INSERT INTO BankAccounts(AccountHolder, CurrentBalance)
---    --                  VALUES('Alice', 50.00);
+CREATE PROCEDURE [PensionListItem] (
+        @agencyId AS int
+)
+AS
+BEGIN
+SELECT
+    CONCAT (ac.LongName, ', ', ac.ShortName) AgencyName, aa.BadgeId, CONCAT(a.LastName,', ', a.FirstName) NameLastFirst, 
+        a.DateOfBirth, aa.DeactivationDate
+FROM Agent a
+    INNER JOIN AgencyAgent aa on a.AgentId = aa.AgentId
+    INNER JOIN SecurityClearance sc on aa.SecurityClearanceId = sc.SecurityClearanceId
+		INNER JOIN Agency ac on aa.AgencyId = ac.AgencyId
+WHERE ac.AgencyId = @agencyId AND sc.SecurityClearanceName = 'Retired'
 
---    --INSERT INTO BankAccounts(AccountHolder, CurrentBalance)
---    --                  VALUES('Bob', 0.00);
-
---    --INSERT INTO Transactions(AccountId, TransactionType, [Timestamp], Amount, Note)
---    --                  VALUES(1, 'DEPOSIT', CURRENT_TIMESTAMP, 50.00, 'Initial Deposit');
---END;
+END;

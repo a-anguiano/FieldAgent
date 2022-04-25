@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FieldAgent.Core;
+﻿using FieldAgent.Core;
 using FieldAgent.Core.Entities;
 using FieldAgent.Core.Interfaces;
-using Microsoft.EntityFrameworkCore;
 
 namespace FieldAgent.DAL.EF
 {
@@ -106,7 +100,7 @@ namespace FieldAgent.DAL.EF
         {
             Response<Mission> response = new Response<Mission>();
 
-            using (var db = DbFac.GetDbContext())   //here
+            using (var db = DbFac.GetDbContext())   
             {
                 db.Missions.Update(mission);
                 db.SaveChanges();

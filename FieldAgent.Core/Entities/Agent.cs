@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FieldAgent.Core.Entities
 {
+
     [Table("Agent")]
     public class Agent
     {
@@ -19,7 +15,8 @@ namespace FieldAgent.Core.Entities
         public decimal Height { get; set; }
 
         public List<Alias> Aliases { get; set; }
-        //public List<Agency> Agencies { get; set; }
+        //private const string ma = "MissionAgent";
+        //[Table(ma)]
         public List<Mission> Missions { get; set; }
 
         public override bool Equals(object obj)

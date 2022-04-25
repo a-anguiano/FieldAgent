@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using FieldAgent.DAL;
 using NUnit.Framework;
 using FieldAgent.Core.Entities;
 using System;
 using FieldAgent.DAL.EF;
-using FieldAgent.Core.DTOs;
 using System.Collections.Generic;
 
 namespace FieldAgent.DAL.Tests
