@@ -33,10 +33,10 @@ namespace FieldAgent.DAL.EF
                     db.Missions.Remove(m);
                 }
 
-                foreach (AgencyAgent aa in db.AgenciesAgents.Where(m => m.AgencyId == agencyId).ToList())
-                {
-                    db.AgenciesAgents.Remove(aa);
-                }
+                //foreach (AgencyAgent aa in db.AgenciesAgents.Where(m => m.AgencyId == agencyId).ToList())
+                //{
+                //    db.AgenciesAgents.Remove(aa);
+                //}
 
                 Agency agency = db.Agencies.Find(agencyId);
                 db.Agencies.Remove(agency);

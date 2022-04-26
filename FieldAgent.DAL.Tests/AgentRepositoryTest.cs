@@ -69,8 +69,8 @@ namespace FieldAgent.DAL.Tests
             missionsExpected.Add(expected);
 
             Assert.IsTrue(db.GetMissions(1).Success);
-            Assert.AreEqual(missionsExpected, db.GetMissions(1).Data);
-        }
+            Assert.AreEqual(missionsExpected.ToString(), db.GetMissions(1).Data.ToString());
+        }   //Trustworthy?
 
         [Test]
         public void TestDelete()

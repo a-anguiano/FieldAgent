@@ -13,6 +13,7 @@ namespace FieldAgent.Core.Entities
 
         public List<Location> Locations { get; set; }
         public List<Mission> Missions { get; set; }
+        public List<AgencyAgent> AgenciesAgents { get; set; } 
         public override bool Equals(object obj)
         {
             return obj is Agency agency &&

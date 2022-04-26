@@ -19,6 +19,6 @@ namespace FieldAgent.Core.Entities
         public int AgencyId { get; set; }
         public Agency Agency { get; set; }
 
-        public List<Agent> Agents { get; set; }
+        public List<MissionAgent> MissionAgents { get; set; }
     }
 }

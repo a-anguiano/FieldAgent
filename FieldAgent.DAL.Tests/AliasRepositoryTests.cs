@@ -34,6 +34,7 @@ namespace FieldAgent.DAL.Tests
         public void TestGet()
         {
             Assert.AreEqual(AliasEight.ToString(), db.Get(8).Data.ToString());
+            //could do on each property
         }
 
         [Test]

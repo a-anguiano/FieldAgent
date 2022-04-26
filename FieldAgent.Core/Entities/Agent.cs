@@ -15,9 +15,8 @@ namespace FieldAgent.Core.Entities
         public decimal Height { get; set; }
 
         public List<Alias> Aliases { get; set; }
-        //private const string ma = "MissionAgent";
-        //[Table(ma)]
-        public List<Mission> Missions { get; set; }
+        public List<MissionAgent> MissionAgents { get; set; }
+        public List<AgencyAgent> AgenciesAgents { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -27,13 +26,13 @@ namespace FieldAgent.Core.Entities
                    LastName == agent.LastName &&
                    DateOfBirth == agent.DateOfBirth &&
                    Height == agent.Height &&
-                   EqualityComparer<List<Alias>>.Default.Equals(Aliases, agent.Aliases) &&
-                   EqualityComparer<List<Mission>>.Default.Equals(Missions, agent.Missions);
+                   EqualityComparer<List<Alias>>.Default.Equals(Aliases, agent.Aliases);
+                   //&& EqualityComparer<List<Mission>>.Default.Equals(Missions, agent.Missions);
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(AgentId, FirstName, LastName, DateOfBirth, Height, Aliases, Missions);
+            return HashCode.Combine(AgentId, FirstName, LastName, DateOfBirth, Height, Aliases);
         }
     }
 }

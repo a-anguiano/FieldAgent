@@ -34,7 +34,7 @@ namespace FieldAgent.DAL.ADO
 
                     using (var dr = cmd.ExecuteReader())
                     {
-                        while (dr.Read())
+                        while (dr.Read())       //can have another try catch, for data corruption
                         {
                             var row = new ClearanceAuditListItem();
                             row.BadgeId = (Guid)dr["BadgeId"];

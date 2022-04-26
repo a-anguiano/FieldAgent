@@ -56,8 +56,7 @@ namespace FieldAgent.DAL.Tests
         [Test]
         public void TestDelete()
         {
-            bool actual = db.Delete(1).Success;
-            Assert.IsTrue(actual);
+            Assert.IsTrue(db.Delete(1).Success);
             Assert.Null(db.Get(1).Data);
         }
 

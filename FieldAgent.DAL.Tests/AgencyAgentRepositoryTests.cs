@@ -37,14 +37,13 @@ namespace FieldAgent.DAL.Tests
         {
             AgencyAgent expected = new AgencyAgent
             {
-                //Foreign Key stuff
                 AgencyId = 3,
                 AgentId = 2,
                 BadgeId = Guid.Parse("db04727a-f808-4552-a452-9124d33b320a"),
-                ActivationDate = DateTime.Parse("1-10-2022"),   //in future may have to change these
+                ActivationDate = DateTime.Parse("1-10-2022"), 
                 DeactivationDate = DateTime.Parse("1-11-2023"),
                 IsActive = true,
-                SecurityClearanceId = 0
+                SecurityClearanceId = 1
             };
 
             db.Insert(expected);

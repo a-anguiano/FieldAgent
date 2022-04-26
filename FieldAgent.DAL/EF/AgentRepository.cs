@@ -17,7 +17,7 @@ namespace FieldAgent.DAL.EF
         {
             Response<Agent> response = new Response<Agent>();
 
-            using (var db = DbFac.GetDbContext())
+            using (var db = DbFac.GetDbContext())   //throws an exception
             {
                 foreach (Agent a in db.Agents.Where(a => a.AgentId == agentId).ToList())
                 {
@@ -65,26 +65,41 @@ namespace FieldAgent.DAL.EF
             if (responseA.Success)
             {
                 List<Mission> missions = new List<Mission>();
+
                 using (var db = DbFac.GetDbContext())
                 {
-                    var agents = db.Agents      //agentmission instead of ma
-                        .Include(at => at.Missions)
-                        .Where(at => at.AgentId == agentId)
-                        .ToList();
+                    List<Mission> results = db.Missions
+                        .Include(m => m.MissionAgents
+                        .Where(at => at.AgentId == agentId)).ToList();
 
-                    foreach (var at in agents)
-                    {
-                        foreach (var mission in at.Missions)
-                        {
-                            missions.Add(mission);
-                        }
-                    }
-                    responseB.Data = missions;
+                    responseB.Data = results;
                     responseB.Success = true;
                 }
-            }
-            return responseB;
+
+                //using (var db = DbFac.GetDbContext())
+                //{
+                //    var agents = db.Agents      //agentmission instead of ma
+                //        .Include(at => at.MissionAgents)
+                //        .Where(at => at.AgentId == agentId)
+                //        .ToList();
+
+                //    foreach (var at in agents)
+                //    {
+                //        //missions = db.MissionAgents
+                //        //    .Include(m => m.MissionAgents)
+                //        //    .Where(m => m.Mi)
+                //        //foreach (var mission in at.MissionAgents)
+                //        //{
+                //        //    missions.Add(mission);
+                //        //}
+                //    }
+                //responseB.Data = missions;
+                //    responseB.Success = true;
+                //}
+            //return responseB;
         }
+        return responseB;
+    }
 
         public Response<Agent> Insert(Agent agent)
         {            

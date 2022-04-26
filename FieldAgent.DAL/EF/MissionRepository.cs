@@ -1,6 +1,7 @@
 ﻿using FieldAgent.Core;
 using FieldAgent.Core.Entities;
 using FieldAgent.Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace FieldAgent.DAL.EF
 {
@@ -67,19 +68,19 @@ namespace FieldAgent.DAL.EF
             return response;
         }
 
-        public Response<List<Mission>> GetByAgent(int agentId)
+        public Response<List<Mission>> GetByAgent(int agentId)  //I dont trust this
         {
-            throw new NotImplementedException();
-            //Response<List<Mission>> response = new Response<List<Mission>>();
+            Response<List<Mission>> response = new Response<List<Mission>>();
 
-            //using (var db = DbFac.GetDbContext())
-            //{
-            //    List<Mission> results = db.Missions
-            //        .Include(m => m.MissionAgent
-            //        .Where(at => at.AgentId == agentId)).ToList();
-            //    response.Data = results;
-            //}
-            //return response;
+            using (var db = DbFac.GetDbContext())
+            {
+                List<Mission> results = db.Missions
+                    .Include(m => m.MissionAgents
+                    .Where(at => at.AgentId == agentId)).ToList();
+
+                response.Data = results;
+            }
+            return response;
         }
 
         public Response<Mission> Insert(Mission mission)
