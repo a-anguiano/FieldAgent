@@ -1,6 +1,6 @@
 ﻿using FieldAgent.Core.Entities;
 
-namespace FieldAgent.Core.Interfaces
+namespace FieldAgent.Core.Interfaces.DAL    //DAL
 {
     public interface IMissionRepository
     {

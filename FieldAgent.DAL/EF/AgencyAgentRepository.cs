@@ -1,8 +1,9 @@
 ﻿using FieldAgent.Core;
 using FieldAgent.Core.Entities;
 using FieldAgent.Core.Interfaces.DAL;
+using Microsoft.EntityFrameworkCore;
 
-namespace FieldAgent.DAL
+namespace FieldAgent.DAL.EF //EF
 {
     public class AgencyAgentRepository : IAgencyAgentRepository
     {
@@ -89,14 +90,18 @@ namespace FieldAgent.DAL
             Response<AgencyAgent> response = new Response<AgencyAgent>();
             using (var db = DbFac.GetDbContext())
             {
+                var agencyagents = db.AgenciesAgents
+                    .Include(aa => aa.SecurityClearance).ToList();
+
                 db.AgenciesAgents.Add(agencyAgent);
-                db.SaveChanges();                    
-                
+                db.SaveChanges();
+
                 response.Success = true;
                 //agent name, agency name?
                 response.Message = $"Successfully inserted Agent {agencyAgent.AgentId}" +
                     $"in Agency {agencyAgent.AgencyId}";
                 response.Data = agencyAgent;
+                return response;
             }
             return response;
         }

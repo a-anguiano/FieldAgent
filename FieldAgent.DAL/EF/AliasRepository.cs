@@ -64,6 +64,7 @@ namespace FieldAgent.DAL.EF
                 List<Alias> results = db.Aliases
                     .Where(at => at.AgentId == agentId).ToList();
                 response.Data = results;
+                response.Success = true;
             }
             return response;
         }
@@ -91,6 +92,7 @@ namespace FieldAgent.DAL.EF
                 db.Aliases.Update(alias);
                 db.SaveChanges();
                 response.Data = alias;
+                response.Success = true;
                 return response;
             }
         }

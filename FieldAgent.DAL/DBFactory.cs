@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FieldAgent.Core.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace FieldAgent.DAL
@@ -8,7 +9,7 @@ namespace FieldAgent.DAL
         TEST,
         PROD
     }
-    public class DBFactory
+    public class DBFactory : IMyService
     {
         private readonly IConfigurationRoot Config;
         private readonly FactoryMode Mode;
@@ -36,4 +37,17 @@ namespace FieldAgent.DAL
             return new AppDbContext(options);
         }
     }
+
+    //public class MyService : IMyService
+    //{
+    //    public MyService(string connString)
+    //    {
+    //        var cn = DBFactory.GetConnectionString();
+    //    }
+
+    //    public string GetConstructorParameter()
+    //    {
+    //        return connectionString;
+    //    }
+    //}
 }

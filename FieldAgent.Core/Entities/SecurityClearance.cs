@@ -10,6 +10,6 @@ namespace FieldAgent.Core.Entities
         public int SecurityClearanceId { get; set; }
         public string SecurityClearanceName { get; set; }
 
-        public List<SecurityClearance> SecurityClearances { get; set; }
+        //public List<SecurityClearance> SecurityClearances { get; set; }
     }
 }

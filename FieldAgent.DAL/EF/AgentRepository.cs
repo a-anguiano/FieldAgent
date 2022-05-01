@@ -1,6 +1,6 @@
 ﻿using FieldAgent.Core;
 using FieldAgent.Core.Entities;
-using FieldAgent.Core.Interfaces;
+using FieldAgent.Core.Interfaces.DAL;
 using Microsoft.EntityFrameworkCore;
 
 namespace FieldAgent.DAL.EF
@@ -19,17 +19,19 @@ namespace FieldAgent.DAL.EF
 
             using (var db = DbFac.GetDbContext())   //throws an exception
             {
-                foreach (Agent a in db.Agents.Where(a => a.AgentId == agentId).ToList())
-                {
-                    db.Agents.Remove(a);
-                }
+
+                var agents = db.Agents
+                    .Include(a => a.MissionAgents)
+                    .ThenInclude(a => a.Mission)
+                    .Include(a => a.AgenciesAgents)
+                    .Include(a => a.Aliases).ToList();
 
                 Agent agent = db.Agents.Find(agentId);
-                //cascade delete??
                 db.Agents.Remove(agent);
-                //
+                //try savechange
                 db.SaveChanges();
                 response.Data = agent;
+                response.Message = $"Deleting Agent ID: {agentId}";
                 response.Success = true;
                 return response;
             }
@@ -46,12 +48,12 @@ namespace FieldAgent.DAL.EF
                 if (response.Data == null)
                 {
                     response.Success = false;
-                    response.Message = "It failed";
+                    response.Message = $"Could not find Agent ID: {id}";
                 }
                 else
                 {
                     response.Success = true;
-                    response.Message = "It's a success";
+                    response.Message = $"Agent ID: {id}";
                 }
             }
             return response;
@@ -74,32 +76,11 @@ namespace FieldAgent.DAL.EF
 
                     responseB.Data = results;
                     responseB.Success = true;
+                    responseB.Message = $"The Mission(s) for Agent ID: {agentId}";
                 }
-
-                //using (var db = DbFac.GetDbContext())
-                //{
-                //    var agents = db.Agents      //agentmission instead of ma
-                //        .Include(at => at.MissionAgents)
-                //        .Where(at => at.AgentId == agentId)
-                //        .ToList();
-
-                //    foreach (var at in agents)
-                //    {
-                //        //missions = db.MissionAgents
-                //        //    .Include(m => m.MissionAgents)
-                //        //    .Where(m => m.Mi)
-                //        //foreach (var mission in at.MissionAgents)
-                //        //{
-                //        //    missions.Add(mission);
-                //        //}
-                //    }
-                //responseB.Data = missions;
-                //    responseB.Success = true;
-                //}
-            //return responseB;
+            }
+            return responseB;
         }
-        return responseB;
-    }
 
         public Response<Agent> Insert(Agent agent)
         {            
@@ -110,6 +91,8 @@ namespace FieldAgent.DAL.EF
                 db.Agents.Add(agent);
                 db.SaveChanges();
                 response.Data = agent;
+                response.Success = true;
+                //response.Message = $"Inserted Agent ID: {agent.AgentId}";
                 return response;
             }
         }
@@ -123,6 +106,8 @@ namespace FieldAgent.DAL.EF
                 db.Agents.Update(agent);
                 db.SaveChanges();
                 response.Data = agent;
+                response.Success = true;
+                response.Message = $"Updating Agent ID: {agent.AgentId}";
                 return response;
             }
         }

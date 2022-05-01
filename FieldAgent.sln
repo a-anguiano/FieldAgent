@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FieldAgent", "FieldAgent\FieldAgent.csproj", "{4AD0F6A9-8203-4BD5-8C3D-0A1F25DB6E70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FieldAgent.DAL", "FieldAgent.DAL\FieldAgent.DAL.csproj", "{77E672C3-2EFB-4452-8C01-14B13A623124}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FieldAgent.DAL", "FieldAgent.DAL\FieldAgent.DAL.csproj", "{77E672C3-2EFB-4452-8C01-14B13A623124}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FieldAgent.Core", "FieldAgent.Core\FieldAgent.Core.csproj", "{01D7FAA3-CF34-4B17-89D9-C8854F89F107}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FieldAgent.Core", "FieldAgent.Core\FieldAgent.Core.csproj", "{01D7FAA3-CF34-4B17-89D9-C8854F89F107}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FieldAgent.DAL.Tests", "FieldAgent.DAL.Tests\FieldAgent.DAL.Tests.csproj", "{10EC3D34-1CCA-4174-BA95-B217B46C5926}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FieldAgent.DAL.Tests", "FieldAgent.DAL.Tests\FieldAgent.DAL.Tests.csproj", "{10EC3D34-1CCA-4174-BA95-B217B46C5926}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FieldAgent.Web", "FieldAgent.Web\FieldAgent.Web.csproj", "{572DB425-7C86-4D9E-9932-D9485E62C5DD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4AD0F6A9-8203-4BD5-8C3D-0A1F25DB6E70}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4AD0F6A9-8203-4BD5-8C3D-0A1F25DB6E70}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4AD0F6A9-8203-4BD5-8C3D-0A1F25DB6E70}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4AD0F6A9-8203-4BD5-8C3D-0A1F25DB6E70}.Release|Any CPU.Build.0 = Release|Any CPU
 		{77E672C3-2EFB-4452-8C01-14B13A623124}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{77E672C3-2EFB-4452-8C01-14B13A623124}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{77E672C3-2EFB-4452-8C01-14B13A623124}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{10EC3D34-1CCA-4174-BA95-B217B46C5926}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{10EC3D34-1CCA-4174-BA95-B217B46C5926}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{10EC3D34-1CCA-4174-BA95-B217B46C5926}.Release|Any CPU.Build.0 = Release|Any CPU
+		{572DB425-7C86-4D9E-9932-D9485E62C5DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{572DB425-7C86-4D9E-9932-D9485E62C5DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{572DB425-7C86-4D9E-9932-D9485E62C5DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{572DB425-7C86-4D9E-9932-D9485E62C5DD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

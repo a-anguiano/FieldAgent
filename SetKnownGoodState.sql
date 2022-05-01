@@ -201,7 +201,7 @@ END;
 -- where TABLE_NAME = 'Agency'
 
 SELECT * from AgencyAgent;	--badgeId constant
---select * from Mission;
+select * from Mission;
 select * from Agent;
 select * from SecurityClearance;	
 select * from Agency;

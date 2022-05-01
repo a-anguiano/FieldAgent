@@ -1,6 +1,7 @@
 ﻿using FieldAgent.Core;
 using FieldAgent.Core.Entities;
 using FieldAgent.Core.Interfaces.DAL;
+using Microsoft.EntityFrameworkCore;
 
 namespace FieldAgent.DAL.EF
 {
@@ -18,25 +19,12 @@ namespace FieldAgent.DAL.EF
 
             using (var db = DbFac.GetDbContext())
             {
-                foreach (Location l in db.Locations.Where(l => l.AgencyId == agencyId).ToList())
-                {
-                    db.Locations.Remove(l);
-                }
 
-                foreach (Mission m in db.Missions.Where(m => m.AgencyId == agencyId).ToList())
-                {
-                    //foreach (Agent at in db.Agents.Where(m).ToList())
-                    //{
-                    //    db.Agents.Remove(at);
-                    //}
-
-                    db.Missions.Remove(m);
-                }
-
-                //foreach (AgencyAgent aa in db.AgenciesAgents.Where(m => m.AgencyId == agencyId).ToList())
-                //{
-                //    db.AgenciesAgents.Remove(aa);
-                //}
+                var agencies = db.Agencies
+                    .Include(a => a.AgenciesAgents)
+                    .Include(a => a.Locations)
+                    .Include(a => a.Missions)
+                    .ThenInclude(a => a.MissionAgents).ToList();
 
                 Agency agency = db.Agencies.Find(agencyId);
                 db.Agencies.Remove(agency);

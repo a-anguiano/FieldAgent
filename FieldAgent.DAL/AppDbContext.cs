@@ -38,29 +38,6 @@ namespace FieldAgent.DAL
 
             builder.Entity<MissionAgent>
                 ().ToTable("MissionAgent").HasKey(ma => new { ma.MissionId, ma.AgentId });
-
-            //// Add the shadow property to the model
-            //builder.Entity<AgencyAgent>()
-            //    .Property<int>("SecurityClearanceId");
-
-            //// Use the shadow property as a foreign key
-            //builder.Entity<AgencyAgent>()
-            //    .HasOne(aa => aa.SecurityClearance)
-            //    .HasForeignKey("SecurityClearanceId");
-
-            //builder.Entity<Agency>()
-            //    .Navigation(ac => ac.Locations).UsePropertyAccessMode(PropertyAccessMode.Property);
-
-            //builder.Entity<AgencyAgent>()
-            //    .Navigation(aa => aa.SecurityClearance).UsePropertyAccessMode(PropertyAccessMode.Property);
-            //builder.Entity<Agency>().HasRequired(t => t.Location)WillCascadeOnDelete(true);
-            //builder.Entity<AgencyAgent>().HasOne(aa => aa.Agency).WithMany(ac => ac.AgencyAgent);
-
-            //builder.Entity<Mission>().HasMany(m => m.Agents).WithMany(a => a.Missions).MapToStoredProcedures();
-
-            //builder.Entity<AgencyAgent>().HasForeignKey(p => p.SecurityClearanceId);
-
-            //builder.Entity<AgencyAgent>().HasRequired(t => t.SecurityClearance).WithMany().HasForeignKey(t => t.SecurityClearanceId)
         }
     }
 }

@@ -1,0 +1,60 @@
+Empty Core, v6
+
+secrets.json (right click DAL project, manage user secrets)
+* need to change TestFieldAgent to just FieldAgent for PROD once I've created that database
+
+"2019-07-16T19:04:05.7257911-06:00"
+
+http://localhost:35307/api/agents
+
+1.20.09 thursday afternoon
+
+Is there any hidden issues with my DAL?
+* in the repositories, need to make sure response.Success = true
+* could add more unique messages
+
+How to leave old values when untouched in PUT?
+
+,"interpolId":"3206f261-94f9-4d47-9a31-275473d659b3"
+
+,"AgencyId":1		//Mission FK
+
+{"agentId":16,"firstName":"Jason","lastName":"Borne","dateOfBirth":"1980-01-01T00:00:00","height":183.00,"aliases":null,"missionAgents":null,"agenciesAgents":null}
+
+        ////GetAgents??
+        //[HttpGet]
+        //[Route("api/[controller]")]
+        //public List<Agent> GetAgents()
+        //{
+        //    var agents = new List<Agent>();
+        //    int i = 1;
+        //    var result = _agentRepo.Get()
+        //    while()
+        //}
+        //[HttpGet]
+        //[Route("api/[controller]")]
+        //public IActionResult GetAgents()
+        //{
+        //    return NoContent();
+        //}
+
+PW
+-AgentsController
+*InsertAgentID, now ID is wonky (1000s)
+*UpdateAgentID, does not leave old values, but does defaults
+
+-AliasesController
+*Insert, Says no route, but inserts (500); also wonky ID
+
+NW
+-AgentsController
+*GetMissions, possible object cycle
+
+-MissionsController
+*InsertMissionAlcatraz, FK conflict (AgencyId)
+*Update, FK conflict (AgencyId)
+*Delete, 405 Method Not Allowed
+
+-AliasesController
+*Update, FK conflict (AgentId)
+*Delete, 405 Method Not Allowed
