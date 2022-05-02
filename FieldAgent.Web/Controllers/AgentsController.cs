@@ -25,7 +25,7 @@ namespace FieldAgent.Web.Controllers
             _aliasRepo = aliasRepo;
         }
 
-        [HttpGet]    //[HttpGet, Authorize]
+        [HttpGet]   //, Authorize
         [Route("/api/[controller]/{agentId}", Name = "GetAgent")]
         public IActionResult GetAgent(int agentId)
         {
@@ -37,7 +37,7 @@ namespace FieldAgent.Web.Controllers
             }
             else
             {
-                return BadRequest(result.Message);
+                return BadRequest(result.Message);  //NotFound
             }
         }
 

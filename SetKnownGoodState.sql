@@ -209,7 +209,10 @@ select * from MissionAgent;	--null
 select * from [Location]; 
 select * from Alias;
 
-
+-- Select * from Mission
+-- INCLUDE 
+--                     .Include(ma => ma.MissionAgents
+--                     .Where(ma => ma.AgentId == agentId)).ToList(); 
 --PensionList
 --Return agent information for only retired agents (security clearance retired)	agencyId
 -- SELECT

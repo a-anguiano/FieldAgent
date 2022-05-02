@@ -38,12 +38,12 @@ How to leave old values when untouched in PUT?
         //    return NoContent();
         //}
 
-//Issues
+//Issues//
 PW
 -AgentsController
 *InsertAgent, now ID is wonky (1000s)
 *UpdateAgentID, does not leave old values, but does defaults
-*GetMissions, gets all missions
+*GetMissions, gets all missions without regard to agentId
 
 -AliasesController
 *Insert, Says no route, but inserts (500); also wonky ID
@@ -61,14 +61,18 @@ NW
 Need to examine the DAL/DAL tests
 
 
-//Previous issues
+//Previous issues//
 NW
 -AgentsController
 *GetMissions, possible object cycle
 
-//Future Steps
+//Future Steps//
 *Implement JWT tokens for security
 	*Be sure to chose the package versions wisely
 	*Postman: Authorization tab, Type bearer token, paste string of characters 
 	given from the Post Login request
 --Installed JWT 6.0.4, Tokens 6.17 at the moment, no warnings received so perhaps compatible
+	*Configure for HTTPS?
+	*Port values? 35307 and 44350
+
+*1001 not necessarily an issue, seed related

@@ -61,6 +61,7 @@ namespace FieldAgent.DAL.Tests
             List<Mission> missionList = new List<Mission>();
             missionList.Add(MissionSeven);
             Assert.AreEqual(missionList.ToString(), db.GetByAgent(7).Data.ToString());
+            Assert.AreEqual(missionList[0].MissionId.ToString(), db.GetByAgent(7).Data[0].MissionId.ToString());
         }
 
         [Test]

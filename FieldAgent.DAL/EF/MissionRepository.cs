@@ -93,8 +93,8 @@ namespace FieldAgent.DAL.EF
             using (var db = DbFac.GetDbContext())
             {
                 List<Mission> results = db.Missions
-                    .Include(m => m.MissionAgents
-                    .Where(at => at.AgentId == agentId)).ToList();
+                    .Include(ma => ma.MissionAgents)
+                    .Where(ma => ma.MissionAgents.Any(m => m.AgentId == agentId)).ToList();  //Understand this
 
                 response.Data = results;
                 if (response.Data == null)
