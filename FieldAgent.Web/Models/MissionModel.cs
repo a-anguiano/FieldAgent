@@ -26,6 +26,7 @@ namespace FieldAgent.Web.Models
         [PositiveDecimal]
         public decimal OperationalCost { get; set; }
 
+        [Required(ErrorMessage = "Agent Id is required")]
         public int AgentId { get; set; } //consider MissionAgent table
         public int AgencyId { get; set; }   //FK
         //public Agency Agency { get; set; }

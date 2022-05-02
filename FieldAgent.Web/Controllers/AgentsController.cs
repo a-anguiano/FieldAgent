@@ -1,6 +1,7 @@
 ﻿using FieldAgent.Core.Entities;
 using FieldAgent.Core.Interfaces.DAL;
 using FieldAgent.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace FieldAgent.Web.Controllers
             _aliasRepo = aliasRepo;
         }
 
-        [HttpGet]
+        [HttpGet]    //[HttpGet, Authorize]
         [Route("/api/[controller]/{agentId}", Name = "GetAgent")]
         public IActionResult GetAgent(int agentId)
         {
@@ -72,7 +73,7 @@ namespace FieldAgent.Web.Controllers
             }
         }
 
-        [HttpDelete("{agentId}")]
+        [HttpDelete("{agentId}")]   //[HttpDelete("{agentId}"), Authorize]
         public IActionResult DeleteAgent(int agentId)
         {
             var findResult = _agentRepo.Get(agentId);
@@ -93,7 +94,7 @@ namespace FieldAgent.Web.Controllers
 
         }
 
-        [HttpPut]
+        [HttpPut]   //[HttpPut, Authorize]  
         public IActionResult UpdateAgent(AgentModel agentModel)
         {
             if (ModelState.IsValid && agentModel.AgentId > 0)
@@ -138,7 +139,22 @@ namespace FieldAgent.Web.Controllers
             var result = _missionRepo.GetByAgent(agentId);
             if (result.Success)
             {
-                return Ok(result.Data);
+                return Ok(
+                     result.Data.Select(
+                        m => new MissionModel()
+                        {
+                        MissionId = m.MissionId,
+                        CodeName = m.CodeName,
+                        Notes = m.Notes,
+                        StartDate = m.StartDate,
+                        ProjectedEndDate = m.ProjectedEndDate,
+                        ActualEndDate = m.ActualEndDate,
+                        OperationalCost = m.OperationalCost,
+                        AgencyId = m.AgencyId,
+                        AgentId = agentId  //m.AgentId
+                        }
+                        )
+                        );
             }
             else
             {

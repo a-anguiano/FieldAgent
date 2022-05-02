@@ -25,9 +25,19 @@ namespace FieldAgent.DAL.EF
 
                 Mission mission = db.Missions.Find(missionId);
                 db.Missions.Remove(mission);
-                db.SaveChanges();
-                response.Data = mission;
-                response.Success = true;
+                try
+                {
+                    db.SaveChanges();
+                    response.Data = mission;
+                    response.Success = true;
+                    response.Message = $"Deleting Mission ID: {missionId}";
+                }
+                catch
+                {
+                    response.Success = false;
+                    response.Message = $"Could not delete Mission ID: {missionId}";
+                }
+
                 return response;
             }
         }
@@ -42,12 +52,12 @@ namespace FieldAgent.DAL.EF
                 if (response.Data == null)
                 {
                     response.Success = false;
-                    response.Message = "It failed";
+                    response.Message = $"Could not find Mission ID: {missionId}";
                 }
                 else
                 {
                     response.Success = true;
-                    response.Message = "It's a success";
+                    response.Message = $"Mission ID: {missionId}";
                 }
             }
             return response;
@@ -62,6 +72,16 @@ namespace FieldAgent.DAL.EF
                 List<Mission> results = db.Missions
                     .Where(ac => ac.AgencyId == agencyId).ToList();
                 response.Data = results;
+                if (response.Data == null)
+                {
+                    response.Success = false;
+                    response.Message = $"Could not get mission(s) by Agency ID: {agencyId}";
+                }
+                else
+                {
+                    response.Success = true;
+                    response.Message = $"Mission(s) at Agency ID: {agencyId}";
+                }
             }
             return response;
         }
@@ -77,7 +97,16 @@ namespace FieldAgent.DAL.EF
                     .Where(at => at.AgentId == agentId)).ToList();
 
                 response.Data = results;
-                response.Success = true;
+                if (response.Data == null)
+                {
+                    response.Success = false;
+                    response.Message = $"Could not get mission(s) by Agent ID: {agentId}";
+                }
+                else
+                {
+                    response.Success = true;
+                    response.Message = $"Mission(s) of Agent ID: {agentId}";
+                }
             }
             return response;
         }
@@ -89,9 +118,19 @@ namespace FieldAgent.DAL.EF
             using (var db = DbFac.GetDbContext())
             {
                 db.Missions.Add(mission);
-                db.SaveChanges();
-                response.Data = mission;
-                response.Success = true;
+                try
+                {
+                    db.SaveChanges();
+                    response.Data = mission;
+                    response.Success = true;
+                    response.Message = $"Inserting Mission ID: {response.Data.MissionId}";
+                }
+                catch
+                {
+                    response.Success = false;
+                    response.Message = "Could not insert mission";
+                }
+
                 return response;
             }
         }
@@ -103,8 +142,19 @@ namespace FieldAgent.DAL.EF
             using (var db = DbFac.GetDbContext())   
             {
                 db.Missions.Update(mission);
-                db.SaveChanges();
-                response.Data = mission;
+                try
+                {
+                    db.SaveChanges();
+                    response.Data = mission;
+                    response.Success = true;
+                    response.Message = $"Updating Mission ID: {response.Data.MissionId}";
+                }
+                catch
+                {
+                    response.Success = false;
+                    response.Message = "Could not update mission";
+                }
+
                 return response;
             }
         }

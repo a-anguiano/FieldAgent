@@ -26,9 +26,18 @@ namespace FieldAgent.DAL.EF
 
                 Alias alias = db.Aliases.Find(aliasId);
                 db.Aliases.Remove(alias);
-                db.SaveChanges();
-                response.Data = alias;
-                response.Success = true;
+                try
+                {
+                    db.SaveChanges();
+                    response.Data = alias;
+                    response.Success = true;
+                    response.Message = $"Deleting Alias ID: {aliasId}";
+                }
+                catch
+                {
+                    response.Success = false;
+                    response.Message = $"Could not remove Alias ID: {aliasId}";
+                }
                 return response;
             }
         }
@@ -44,12 +53,12 @@ namespace FieldAgent.DAL.EF
                 if (response.Data == null)
                 {
                     response.Success = false;
-                    response.Message = "It failed";
+                    response.Message = $"Could not find Alias ID: {id}";
                 }
                 else
                 {
                     response.Success = true;
-                    response.Message = "It's a success";
+                    response.Message = $"Alias ID: {id}";
                 }
             }
             return response;
@@ -64,7 +73,16 @@ namespace FieldAgent.DAL.EF
                 List<Alias> results = db.Aliases
                     .Where(at => at.AgentId == agentId).ToList();
                 response.Data = results;
-                response.Success = true;
+                if (response.Data == null)
+                {
+                    response.Success = false;
+                    response.Message = $"Could not get Alias(es) by Agent ID: {agentId}";
+                }
+                else
+                {
+                    response.Success = true;
+                    response.Message = $"Aliases of Agent ID: {agentId}";
+                }
             }
             return response;
         }
@@ -76,10 +94,20 @@ namespace FieldAgent.DAL.EF
             using (var db = DbFac.GetDbContext())
             {
                 db.Aliases.Add(alias);
-                db.SaveChanges();
-                response.Data = alias;
-                response.Success = true;
-                return response;
+                try
+                {
+                    db.SaveChanges();
+                    response.Data = alias;
+                    response.Success = true;
+                    response.Message = $"Inserted Alias ID: {response.Data.AliasId}";
+                    return response;
+                }
+                catch
+                {
+                    response.Success = false;
+                    response.Message = "Could not insert Alias";
+                    return response;
+                }
             }
         }
 
@@ -87,13 +115,23 @@ namespace FieldAgent.DAL.EF
         {
             Response<Alias> response = new Response<Alias>();
 
-            using (var db = DbFac.GetDbContext())   //here
+            using (var db = DbFac.GetDbContext())   
             {
                 db.Aliases.Update(alias);
-                db.SaveChanges();
-                response.Data = alias;
-                response.Success = true;
-                return response;
+                try
+                {
+                    db.SaveChanges();
+                    response.Data = alias;
+                    response.Success = true;
+                    response.Message = $"Updating Alias ID: {response.Data.AliasId}";
+                    return response;
+                }
+                catch
+                {
+                    response.Success = false;
+                    response.Message = "Could not update Alias";
+                    return response;
+                }
             }
         }
     }

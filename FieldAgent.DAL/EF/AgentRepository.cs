@@ -28,11 +28,18 @@ namespace FieldAgent.DAL.EF
 
                 Agent agent = db.Agents.Find(agentId);
                 db.Agents.Remove(agent);
-                //try savechange
-                db.SaveChanges();
-                response.Data = agent;
-                response.Message = $"Deleting Agent ID: {agentId}";
-                response.Success = true;
+                try
+                {
+                    db.SaveChanges();
+                    response.Data = agent;
+                    response.Message = $"Deleting Agent ID: {agentId}";
+                    response.Success = true;
+                }
+                catch
+                {
+                    response.Success = false;
+                    response.Message = $"Could not delete Agent ID: {agentId}";
+                }
                 return response;
             }
         }
@@ -73,10 +80,17 @@ namespace FieldAgent.DAL.EF
                     List<Mission> results = db.Missions
                         .Include(m => m.MissionAgents
                         .Where(at => at.AgentId == agentId)).ToList();
-
-                    responseB.Data = results;
-                    responseB.Success = true;
-                    responseB.Message = $"The Mission(s) for Agent ID: {agentId}";
+                    if (responseB == null)
+                    {
+                        responseB.Success = false;
+                        responseB.Message = $"Could not find the Mission(s) for Agent ID: {agentId}";
+                    }
+                    else
+                    {
+                        responseB.Data = results;
+                        responseB.Success = true;
+                        responseB.Message = $"The Mission(s) for Agent ID: {agentId}";
+                    }
                 }
             }
             return responseB;
@@ -89,10 +103,19 @@ namespace FieldAgent.DAL.EF
             using (var db = DbFac.GetDbContext())
             {
                 db.Agents.Add(agent);
-                db.SaveChanges();
-                response.Data = agent;
-                response.Success = true;
-                //response.Message = $"Inserted Agent ID: {agent.AgentId}";
+                try
+                {
+                    db.SaveChanges();
+                    response.Data = agent;
+                    response.Success = true;
+                    response.Message = $"Inserted Agent ID: {agent.AgentId}";
+                }
+                catch
+                {
+                    response.Success = false;
+                    response.Message = $"Could not insert Agent ID: {agent.AgentId}";
+                }
+
                 return response;
             }
         }
@@ -104,10 +127,18 @@ namespace FieldAgent.DAL.EF
             using (var db = DbFac.GetDbContext())
             {
                 db.Agents.Update(agent);
-                db.SaveChanges();
-                response.Data = agent;
-                response.Success = true;
-                response.Message = $"Updating Agent ID: {agent.AgentId}";
+                try
+                {
+                    db.SaveChanges();
+                    response.Data = agent;
+                    response.Success = true;
+                    response.Message = $"Updating Agent ID: {agent.AgentId}";
+                }
+                catch
+                {
+                    response.Success = false;
+                    response.Message = $"Could not update Agent";
+                }
                 return response;
             }
         }
