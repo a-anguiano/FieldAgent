@@ -1,5 +1,5 @@
 ﻿using FieldAgent.Web.Models;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -12,6 +12,8 @@ namespace FieldAgent.Web.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        //[AllowAnonymous]
+
         [HttpPost, Route("login")]
         public IActionResult Login(LoginModel user)
         {
@@ -31,7 +33,8 @@ namespace FieldAgent.Web.Controllers
                     claims: new List<Claim>(),
                     expires: DateTime.Now.AddMinutes(30),
                     signingCredentials: signinCredentials
-                    );
+                );
+
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(tokeOptions);
                 return Ok(new { Token = tokenString });
             }

@@ -1,21 +1,21 @@
-﻿{
+{
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "http://localhost:35307",
-      "sslPort": 44350 //35307 //adding this in   //443 is https
+      "sslPort": 0
     }
   },
   "profiles": {
     "FieldAgent.Web": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:5001;http://localhost:5000", //"applicationUrl": "http://localhost:5159",  //change?
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+      },
+      "applicationUrl": "https://localhost:5001;http://localhost:5000",
+      "dotnetRunMessages": true
     },
     "IIS Express": {
       "commandName": "IISExpress",
@@ -26,31 +26,3 @@
     }
   }
 }
-//{
-//  "iisSettings": {
-//    "windowsAuthentication": false,
-//    "anonymousAuthentication": true,
-//    "iisExpress": {
-//      "applicationUrl": "http://localhost:35307", //33871
-//      "sslPort": 44350
-//    }
-//  },
-//  "profiles": {
-//    "IIS Express": {
-//      "commandName": "IISExpress",
-//      "launchBrowser": true,
-//      "environmentVariables": {
-//        "ASPNETCORE_ENVIRONMENT": "Development"
-//      }
-//    },
-//    "TractorTracker.MVC": {
-//      "commandName": "Project",
-//      "dotnetRunMessages": "true",
-//      "launchBrowser": true,
-//      "applicationUrl": "https://localhost:5001;http://localhost:5000",
-//      "environmentVariables": {
-//        "ASPNETCORE_ENVIRONMENT": "Development"
-//      }
-//    }
-//  }
-//}

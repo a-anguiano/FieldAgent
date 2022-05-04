@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FieldAgent.Web.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/agents/{agentId}/[controller]")]
     [ApiController]
     public class AliasesController : ControllerBase
     {
@@ -33,7 +33,7 @@ namespace FieldAgent.Web.Controllers
         }
 
         [HttpPost]
-        [Route("/api/agents/{agentId}/aliases")]
+        //[Route("/api/agents/{agentId}/aliases")]
         public IActionResult InsertAlias(AliasModel aliasModel)
         {
             if (ModelState.IsValid)
@@ -50,8 +50,7 @@ namespace FieldAgent.Web.Controllers
 
                 if (result.Success)
                 {
-                    return CreatedAtRoute(nameof(GetAlias), new { aliasId = result.Data.AliasId }, result.Data);
-                    //CreateAtAction
+                    return CreatedAtRoute(nameof(GetAlias), new { agentId = result.Data.AgentId, aliasId = result.Data.AliasId }, result.Data);
                 }
                 else
                 {
@@ -66,7 +65,6 @@ namespace FieldAgent.Web.Controllers
         }
 
         [HttpDelete("{aliasId}")]
-        [Route("/api/agents/{agentId}/aliases")]
         public IActionResult DeleteAlias(int aliasId)
         {
             var findResult = _aliasRepo.Get(aliasId);
@@ -88,7 +86,7 @@ namespace FieldAgent.Web.Controllers
         }
 
         [HttpPut]
-        [Route("/api/agents/{agentId}/aliases/")]
+        [Route("/api/agents/{agentId}/aliases/")]    
         public IActionResult UpdateAlias(AliasModel aliasModel)
         {
             if (ModelState.IsValid && aliasModel.AliasId > 0)
@@ -98,7 +96,8 @@ namespace FieldAgent.Web.Controllers
                     AliasId = aliasModel.AliasId, //ID?
                     AliasName = aliasModel.AliasName,
                     InterpolId = aliasModel.InterpolId,
-                    Persona = aliasModel.Persona
+                    Persona = aliasModel.Persona,
+                    AgentId = aliasModel.AgentId
                 };
 
                 var findResult = _aliasRepo.Get(alias.AliasId);

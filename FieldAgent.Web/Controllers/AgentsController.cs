@@ -37,7 +37,7 @@ namespace FieldAgent.Web.Controllers
             }
             else
             {
-                return BadRequest(result.Message);  //NotFound
+                return NotFound(result.Message);  
             }
         }
 
@@ -151,7 +151,7 @@ namespace FieldAgent.Web.Controllers
                         ActualEndDate = m.ActualEndDate,
                         OperationalCost = m.OperationalCost,
                         AgencyId = m.AgencyId,
-                        AgentId = agentId  //m.AgentId
+                        AgentId = agentId  
                         }
                         )
                         );

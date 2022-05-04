@@ -16,15 +16,27 @@ namespace FieldAgent.DAL.EF
         public Response Delete(int aliasId)
         {
             Response<Alias> response = new Response<Alias>();
+            Alias alias = new Alias();
 
             using (var db = DbFac.GetDbContext())
             {
+                var responseA = Get(aliasId);
+                if (!responseA.Success)
+                {
+                    response.Success = responseA.Success;
+                    response.Message = responseA.Message;
+                    return response;
+                }
+                else
+                {
+                    alias = responseA.Data;
+                }
                 foreach (Alias a in db.Aliases.Where(a => a.AliasId == aliasId).ToList())
                 {
                     db.Aliases.Remove(a);
                 }
 
-                Alias alias = db.Aliases.Find(aliasId);
+                //Alias alias = db.Aliases.Find(aliasId);
                 db.Aliases.Remove(alias);
                 try
                 {
@@ -124,14 +136,14 @@ namespace FieldAgent.DAL.EF
                     response.Data = alias;
                     response.Success = true;
                     response.Message = $"Updating Alias ID: {response.Data.AliasId}";
-                    return response;
                 }
                 catch
                 {
                     response.Success = false;
                     response.Message = "Could not update Alias";
-                    return response;
                 }
+                return response;
+
             }
         }
     }

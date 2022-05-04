@@ -130,7 +130,6 @@ namespace FieldAgent.DAL.EF
                     response.Success = false;
                     response.Message = "Could not insert mission";
                 }
-
                 return response;
             }
         }
@@ -154,7 +153,6 @@ namespace FieldAgent.DAL.EF
                     response.Success = false;
                     response.Message = "Could not update mission";
                 }
-
                 return response;
             }
         }

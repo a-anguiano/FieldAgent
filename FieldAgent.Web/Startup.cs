@@ -1,11 +1,10 @@
 ﻿using FieldAgent.Core.Interfaces.DAL;
-using Microsoft.Extensions.DependencyInjection;
 using FieldAgent.DAL.EF;
-using FieldAgent.Core.Interfaces;
 using FieldAgent.DAL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Mvc;
 
 namespace FieldAgent.Web
 {
@@ -22,11 +21,12 @@ namespace FieldAgent.Web
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidateIssuerSigningKey = true,
+
                         ValidIssuer = "http://localhost:2000",
                         ValidAudience = "http://localhost:2000",
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("KeyForSignInSecret@1234"))
                     };
-                    services.AddMvc().SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
+                    services.AddMvc();
                 });
 
             services.AddControllers();
@@ -46,11 +46,12 @@ namespace FieldAgent.Web
                 app.UseDeveloperExceptionPage();
             }
 
+            //what order? Authen,author,route?
+
             app.UseRouting();
-
             app.UseAuthentication();
-
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {

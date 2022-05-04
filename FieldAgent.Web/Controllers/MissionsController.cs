@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FieldAgent.Web.Controllers
 {
-    [Route("api/[controller]")] //change?
+    [Route("api/agents/{agentId}/[controller]")]
     [ApiController]
     public class MissionsController : ControllerBase
     {
@@ -40,21 +40,21 @@ namespace FieldAgent.Web.Controllers
             {
                 Mission mission = new Mission
                 {
-                    MissionId = missionModel.MissionId, //ID?
+                    MissionId = missionModel.MissionId, 
                     CodeName = missionModel.CodeName,
                     Notes = missionModel.Notes,
                     StartDate = missionModel.StartDate,
                     ProjectedEndDate = missionModel.ProjectedEndDate,
                     ActualEndDate = missionModel.ActualEndDate,
-                    OperationalCost = missionModel.OperationalCost
+                    OperationalCost = missionModel.OperationalCost,
+                    AgencyId = missionModel.AgencyId
                 };
 
                 var result = _missionRepo.Insert(mission);
 
                 if (result.Success)
                 {
-                    //return Ok(result.Data);
-                    return CreatedAtRoute(nameof(GetMission), new { agentId = result.Data.MissionId }, result.Data);
+                    return CreatedAtRoute(nameof(GetMission), new {agentId = missionModel.AgentId, missionId = result.Data.MissionId}, result.Data);
                 }
                 else
                 {
@@ -69,7 +69,6 @@ namespace FieldAgent.Web.Controllers
         }
 
         [HttpDelete("{missionId}")]
-        [Route("/api/agents/{agentId}/missions")]
         public IActionResult DeleteMission(int missionId)
         {
             var findResult = _missionRepo.Get(missionId);
@@ -104,7 +103,8 @@ namespace FieldAgent.Web.Controllers
                     StartDate = missionModel.StartDate,
                     ProjectedEndDate = missionModel.ProjectedEndDate,
                     ActualEndDate = missionModel.ActualEndDate,
-                    OperationalCost = missionModel.OperationalCost
+                    OperationalCost = missionModel.OperationalCost,
+                    AgencyId = missionModel.AgencyId
                 };
 
                 var findResult = _missionRepo.Get(mission.MissionId);
