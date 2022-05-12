@@ -1,11 +1,7 @@
 ﻿using FieldAgent.Core.Entities;
 using FieldAgent.Core.Interfaces.DAL;
 using FieldAgent.Web.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 
 namespace FieldAgent.Web.Controllers
@@ -42,7 +38,6 @@ namespace FieldAgent.Web.Controllers
         }
 
         [HttpPost]
-        //[Route("api/[controller]")]
         public IActionResult InsertAgent(AgentModel agentModel)
         {
             if (ModelState.IsValid)

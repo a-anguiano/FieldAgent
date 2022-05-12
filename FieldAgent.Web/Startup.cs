@@ -10,8 +10,21 @@ namespace FieldAgent.Web
 {
     public class Startup
     {
-        public void ConfigureServices(IServiceCollection services)
+        string MyAllowSpecificOrigins = "_myAllowSpecificOrigins"; //confirm location
+
+        public void ConfigureServices(IServiceCollection services)  
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                    policy =>
+                    {
+                        policy.AllowAnyHeader();
+                        policy.WithOrigins("*", "http://localhost:3000");
+                        policy.AllowAnyMethod();
+                    });
+            });
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -30,7 +43,7 @@ namespace FieldAgent.Web
                 });
 
             services.AddControllers();
-            ConfigProvider cp = new ConfigProvider();
+            ConfigProvider cp = new ConfigProvider(); 
             DBFactory dbFactory = new DBFactory(cp.Config);
 
             services.AddTransient<IAgentRepository, AgentRepository>(s => new AgentRepository(dbFactory));
@@ -49,6 +62,8 @@ namespace FieldAgent.Web
             //what order? Authen,author,route?
 
             app.UseRouting();
+            app.UseCors(MyAllowSpecificOrigins);
+
             app.UseAuthentication();
             app.UseAuthorization();
 

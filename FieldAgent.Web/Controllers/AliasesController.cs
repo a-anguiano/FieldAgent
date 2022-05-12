@@ -1,7 +1,6 @@
 ﻿using FieldAgent.Core.Entities;
 using FieldAgent.Core.Interfaces.DAL;
 using FieldAgent.Web.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FieldAgent.Web.Controllers
@@ -33,7 +32,6 @@ namespace FieldAgent.Web.Controllers
         }
 
         [HttpPost]
-        //[Route("/api/agents/{agentId}/aliases")]
         public IActionResult InsertAlias(AliasModel aliasModel)
         {
             if (ModelState.IsValid)
@@ -93,7 +91,7 @@ namespace FieldAgent.Web.Controllers
             {
                 Alias alias = new Alias
                 {
-                    AliasId = aliasModel.AliasId, //ID?
+                    AliasId = aliasModel.AliasId,
                     AliasName = aliasModel.AliasName,
                     InterpolId = aliasModel.InterpolId,
                     Persona = aliasModel.Persona,
